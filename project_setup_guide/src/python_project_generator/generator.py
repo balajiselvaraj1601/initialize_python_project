@@ -182,18 +182,7 @@ class ProjectGenerator:
         (project_path / "docs").mkdir(parents=True, exist_ok=True)
         (project_path / "scripts").mkdir(parents=True, exist_ok=True)
 
-        # Create __init__.py files
-        init_content = f'''"""
-{self.description}
-"""
-
-__version__ = "0.1.0"
-__author__ = "{self.author_name}"
-__email__ = "{self.author_email}"
-'''
-        (project_path / "src" / self.project_name / "__init__.py").write_text(
-            init_content
-        )
+        # Package files: create main module(s)
 
         # Create main.py
         main_content = '''"""Main module for the application."""
@@ -220,9 +209,6 @@ if __name__ == "__main__":
         (project_path / "src" / self.project_name / "main.py").write_text(main_content)
 
         # Create test files
-        (project_path / "tests" / "__init__.py").write_text(
-            f'"""Tests for {self.project_name}"""\n'
-        )
 
         test_content = f'''"""Tests for main module."""
 

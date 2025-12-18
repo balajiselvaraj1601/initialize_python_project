@@ -108,10 +108,10 @@ my_awesome_project/
 ├── scripts/                # Utility scripts
 ├── src/
 │   └── my_awesome_project/ # Your package code
-│       ├── __init__.py
+│       └── main.py
 │       └── main.py
 ├── tests/                  # Test suite
-│   ├── __init__.py
+│   └── test_main.py
 │   └── test_main.py
 ├── .gitignore
 ├── .pre-commit-config.yaml
@@ -220,7 +220,6 @@ python-project-generator \
 project_setup_guide/
 ├── src/
 │   └── python_project_generator/
-│       ├── __init__.py           # Package initialization
 │       ├── cli.py                # Command-line interface
 │       ├── generator.py          # Core generation logic
 │       └── templates/            # All template files

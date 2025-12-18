@@ -2,20 +2,19 @@
 
 This guide provides a step-by-step process for creating a Python project repository using a modern, reproducible layout.
 
-## Quick Start
+## Quick Start (tox-only)
 
-**Using the automation script (recommended):**
+Follow these steps to get started using `tox` for development and CI tasks.
+
 ```bash
-python setup_project.py
+python -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+pip install -e .[dev]
+tox -l           # list available tox environments
+tox -e pytest    # run tests
+tox -e lint      # run linters
 ```
-
-This script will:
-1. Prompt you for project details (name, author, etc.)
-2. Replace all placeholders throughout the template
-3. Create the proper directory structure
-4. Move template files to their correct locations
-
-**Manual setup** is described in the sections below if you prefer full control.
 
 ---
 
@@ -51,26 +50,14 @@ git init
 
 ---
 
-### Step 2 — Run Setup Script
+### Step 2 — Virtual environment and install
+
+Create a virtual environment and install the project with dev dependencies (used by tox):
 
 ```bash
-python setup_project.py
-```
-
-The script will prompt you for:
-- Project name (lowercase, underscores allowed)
-- Project description
-- Author name
-- Author email
-- GitHub username
-
-It will then replace all `{{PLACEHOLDER}}` values throughout the template files.
-
-**Verify:**
-```bash
-# Check that placeholders are replaced
-grep -r "{{" pyproject.toml README.md
-# Should return no results if successful
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .[dev]
 ```
 
 ---
@@ -134,19 +121,17 @@ pre-commit run --all-files  # Should run all hooks
 
 ---
 
+
 ### Step 6 — Verify Installation
 
-Run the validation script:
+Run tests and linters via `tox`:
+
 ```bash
-python scripts/validate_project.py
+tox -e pytest
+tox -e lint
 ```
 
-Run tests:
-```bash
-make test
-# Or manually:
-pytest tests/ -v
-```
+If you need to run commands directly inside your virtualenv, use `pytest` or `ruff` as usual.
 
 **Troubleshooting:**
 
@@ -178,14 +163,13 @@ YOUR_PROJECT/
 │   ├── installation.rst        # Install guide
 │   ├── usage.rst               # Usage guide
 │   └── modules.rst             # API reference
-├── scripts/
-│   └── validate_project.py     # Project validation
+├── scripts/                     # optional helper scripts
 ├── src/
 │   └── YOUR_PROJECT/
-│       ├── __init__.py         # Package initialization
+│       ├── (no __init__.py)    # Package modules instead placed in `main.py`
 │       └── main.py             # Main module
 ├── tests/
-│   ├── __init__.py
+│   ├── (no __init__.py)
 │   └── test_main.py            # Test suite
 ├── .gitignore                  # Git ignore rules
 ├── .pre-commit-config.yaml     # Pre-commit hooks
@@ -193,7 +177,7 @@ YOUR_PROJECT/
 ├── CODE_OF_CONDUCT.md          # Community guidelines
 ├── CONTRIBUTING.md             # Contribution guide
 ├── LICENSE                     # MIT License
-├── Makefile                    # Convenient commands
+├── (Makefile removed)          # Use `tox` instead for tasks
 ├── pyproject.toml              # Project configuration
 ├── README.md                   # Project readme
 ├── SECURITY.md                 # Security policy
@@ -281,7 +265,7 @@ pip install -e .[dev]
 1. Create new file: `src/YOUR_PROJECT/new_module.py`
 2. Add tests: `tests/test_new_module.py`
 3. Update docs: `docs/modules.rst`
-4. Export in `__init__.py` if public API
+4. Export from `main.py` or an explicit module file if exposing a public API
 
 ### Configuring Tools
 

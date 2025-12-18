@@ -49,9 +49,8 @@ Running `python scripts/validate_project.py` on the template itself will show is
 ## Files Overview
 
 ### Template Files (moved during setup)
-- `template___init__.py` → `src/YOUR_PROJECT/__init__.py`
+<!-- Note: `__init__.py` templates were removed; package entry is `src/YOUR_PROJECT/main.py` and tests are `tests/test_main.py` -->
 - `template_main.py` → `__main__.py`
-- `template_tests___init__.py` → `tests/__init__.py`
 - `src_template_main.py` → `src/YOUR_PROJECT/main.py`
 - `tests_template_test_main.py` → `tests/test_main.py`
 - `docs_*.rst` → `docs/*.rst`

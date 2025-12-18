@@ -35,8 +35,6 @@ This document summarizes all fixes applied to transform this Python project temp
 **Solution - Created**:
 - ✅ `LICENSE` - MIT License with placeholder
 - ✅ `.pre-commit-config.yaml` - Already existed, verified complete
-- ✅ `template___init__.py` - Package initialization template
-- ✅ `template_tests___init__.py` - Test package initialization
 - ✅ `template_main.py` - Entry point template
 - ✅ `CHANGELOG.md` - Version history tracker
 - ✅ `SECURITY.md` - Security policy
@@ -89,13 +87,12 @@ This document summarizes all fixes applied to transform this Python project temp
 
 **Solution**:
 - ✅ Created properly named template files with `template_` prefix
-- ✅ Added `__init__.py` templates for both src and tests
+-- ✅ __init__ templates intentionally removed; package modules provided via `main.py`
 - ✅ Created `setup_project.py` to automate file placement
 - ✅ Added clear instructions in PROJECT_SETUP.md
 
 **Files Created**:
-- `template___init__.py`
-- `template_tests___init__.py`
+-- (no __init__ templates)
 - `template_main.py`
 - `setup_project.py`
 

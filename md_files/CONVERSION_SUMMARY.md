@@ -13,8 +13,8 @@ The Python project template has been successfully converted into a fully install
 ```
 project_setup_guide/
 ├── src/python_project_generator/    # Main package
-│   ├── __init__.py                  # Package initialization
 │   ├── cli.py                       # Command-line interface
+│   ├── generator.py                 # Core generation logic
 │   ├── generator.py                 # Core generation logic
 │   └── templates/                   # All template files (50+ files)
 │       ├── .github/workflows/

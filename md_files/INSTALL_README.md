@@ -113,10 +113,8 @@ my_awesome_project/
 │   └── validate_project.py     # Project validation
 ├── src/
 │   └── my_awesome_project/
-│       ├── __init__.py         # Package initialization
 │       └── main.py             # Main module with example code
 ├── tests/
-│   ├── __init__.py
 │   └── test_main.py            # Test suite
 ├── .gitignore                  # Comprehensive ignore rules
 ├── .pre-commit-config.yaml     # Pre-commit hooks

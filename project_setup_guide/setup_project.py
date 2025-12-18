@@ -74,8 +74,6 @@ def setup_project(project_dir: Path, values: Dict[str, str]) -> None:
         'docs_installation.rst',
         'docs_usage.rst',
         'docs_modules.rst',
-        'template___init__.py',
-        'template_tests___init__.py',
         'template_main.py',
         'src_template_main.py',
         'tests_template_test_main.py',
@@ -83,12 +81,32 @@ def setup_project(project_dir: Path, values: Dict[str, str]) -> None:
         '.vscode/launch.json',
     ]
     
-    # Replace placeholders in all template files
+    # Helper to locate files which may have been moved into repo-level `rst_files/`
+    def find_file(file_name: str) -> Path | None:
+        # 1) check in the template/project dir
+        candidate = project_dir / file_name
+        if candidate.exists():
+            return candidate
+
+        # 2) check in repo root `rst_files/`
+        repo_root = project_dir.parent
+        candidate = repo_root / 'rst_files' / file_name
+        if candidate.exists():
+            return candidate
+
+        # 3) check in repo root `rst_files/templates/docs/` (for template docs)
+        candidate = repo_root / 'rst_files' / 'templates' / 'docs' / file_name
+        if candidate.exists():
+            return candidate
+
+        return None
+
+    # Replace placeholders in all template files (searching fallback locations)
     for file_name in template_files:
-        file_path = project_dir / file_name
-        if file_path.exists():
+        file_path = find_file(file_name)
+        if file_path is not None:
             replace_in_file(file_path, values)
-            print(f"✓ Processed {file_name}")
+            print(f"✓ Processed {file_name} (from {file_path.relative_to(project_dir) if file_path.exists() else file_path})")
     
     # Create proper directory structure
     src_dir = project_dir / 'src' / values['PROJECT_NAME']
@@ -101,9 +119,8 @@ def setup_project(project_dir: Path, values: Dict[str, str]) -> None:
     
     # Move template files to proper locations
     template_mappings = {
-        'template___init__.py': src_dir / '__init__.py',
+        
         'src_template_main.py': src_dir / 'main.py',
-        'template_tests___init__.py': tests_dir / '__init__.py',
         'tests_template_test_main.py': tests_dir / 'test_main.py',
         'template_main.py': project_dir / '__main__.py',
         'docs_conf.py': docs_dir / 'conf.py',
@@ -112,10 +129,13 @@ def setup_project(project_dir: Path, values: Dict[str, str]) -> None:
         'docs_usage.rst': docs_dir / 'usage.rst',
         'docs_modules.rst': docs_dir / 'modules.rst',
     }
-    
+
     for source, dest in template_mappings.items():
-        source_path = project_dir / source
-        if source_path.exists():
+        # try to find the source file in its original or moved location
+        source_path = find_file(source)
+        if source_path is not None:
+            # ensure destination parent exists
+            dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.move(str(source_path), str(dest))
             print(f"✓ Moved {source} → {dest.relative_to(project_dir)}")
     

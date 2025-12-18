@@ -189,7 +189,7 @@ All tools are configured in `pyproject.toml`:
 1. Create: `src/your_project/new_module.py`
 2. Test: `tests/test_new_module.py`
 3. Document: Update `docs/modules.rst`
-4. Export: Add to `src/your_project/__init__.py`
+4. Export: Add desired exports in `src/your_project/main.py` or create explicit module files and export from them
 
 ## 📦 Publishing
 

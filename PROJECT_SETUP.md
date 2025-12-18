@@ -4,16 +4,16 @@ This guide provides a step-by-step process for creating a Python project reposit
 
 ## Quick Start
 
-**Using the automation script (recommended):**
+**Using the automation tool (recommended):**
 ```bash
-python setup_project.py
+python-project-generator
 ```
 
-This script will:
+This tool will:
 1. Prompt you for project details (name, author, etc.)
-2. Replace all placeholders throughout the template
-3. Create the proper directory structure
-4. Move template files to their correct locations
+2. Create the proper directory structure
+3. Generate all necessary files with placeholders replaced
+4. Initialize a git repository
 
 **Manual setup** is described in the sections below if you prefer full control.
 
@@ -29,48 +29,66 @@ This script will:
 - `uv` - fast Python package installer ([install guide](https://github.com/astral-sh/uv))
 - `make` - for convenient command shortcuts (usually pre-installed on macOS/Linux)
 
+**Install the Python Project Generator:**
+```bash
+# Clone this repository
+git clone https://github.com/YOUR_USERNAME/python-project-generator.git
+cd python-project-generator
+
+# Install in development mode
+pip install -e .
+```
+
+**Verify installation:**
+```bash
+python-project-generator --version
+# Should show version 1.0.0
+```
+
 ---
 
 ## Manual Setup Steps
 
-### Step 1 — Clone or Copy This Template
+### Step 1 — Install Python Project Generator
 
-Option A: Use this as a template
 ```bash
-# If this is a GitHub template repository
-gh repo create YOUR_PROJECT --template YOUR_USERNAME/python-project-template
-cd YOUR_PROJECT
+# Option A: Install from source (for development)
+git clone https://github.com/YOUR_USERNAME/python-project-generator.git
+cd python-project-generator
+pip install -e .
+
+# Option B: Install from PyPI (when published)
+pip install python-project-generator
 ```
 
-Option B: Copy manually
+**Verify:**
 ```bash
-cp -r project_setup_guide YOUR_PROJECT_NAME
-cd YOUR_PROJECT_NAME
-git init
+python-project-generator --version
+# Should show the version
 ```
 
 ---
 
-### Step 2 — Run Setup Script
+### Step 2 — Run Project Generator
 
 ```bash
-python setup_project.py
+python-project-generator
 ```
 
-The script will prompt you for:
+The tool will prompt you for:
 - Project name (lowercase, underscores allowed)
 - Project description
 - Author name
 - Author email
 - GitHub username
 
-It will then replace all `{{PLACEHOLDER}}` values throughout the template files.
+It will then create a new project directory with all files properly configured.
 
 **Verify:**
 ```bash
-# Check that placeholders are replaced
-grep -r "{{" pyproject.toml README.md
-# Should return no results if successful
+# Check that the project was created
+ls -la YOUR_PROJECT_NAME/
+# Should show the complete project structure
 ```
 
 ---
@@ -166,8 +184,17 @@ After setup, your project will have this structure:
 ```
 YOUR_PROJECT/
 ├── .github/
+│   ├── CODEOWNERS               # Code ownership rules
+│   ├── ISSUE_TEMPLATE/
+│   │   ├── bug_report.md        # Bug report template
+│   │   ├── config.yml           # Issue template config
+│   │   └── feature_request.md   # Feature request template
+│   ├── PULL_REQUEST_TEMPLATE.md # PR template
+│   ├── actions/
+│   │   └── verify-metadata/     # Custom GitHub Action
+│   │       └── action.yml       # Action definition
 │   └── workflows/
-│       └── ci.yml              # GitHub Actions CI
+│       └── ci.yml               # GitHub Actions CI
 ├── .vscode/
 │   ├── settings.json           # VS Code settings
 │   ├── launch.json             # Debug configurations
@@ -178,6 +205,19 @@ YOUR_PROJECT/
 │   ├── installation.rst        # Install guide
 │   ├── usage.rst               # Usage guide
 │   └── modules.rst             # API reference
+├── md_files/
+│   ├── CHANGELOG.md
+│   ├── CODE_OF_CONDUCT.md
+│   ├── CONTRIBUTING.md
+│   ├── CONVERSION_SUMMARY.md
+│   ├── FIX_SUMMARY.md
+│   ├── INSTALL_README.md
+│   ├── PACKAGE_USAGE.md
+│   ├── QUICKSTART.md
+│   ├── SECURITY.md
+│   ├── SUPPORT.md
+│   ├── TEMPLATE_README.md
+│   └── USAGE.md
 ├── scripts/
 │   └── validate_project.py     # Project validation
 ├── src/
@@ -189,17 +229,14 @@ YOUR_PROJECT/
 │   └── test_main.py            # Test suite
 ├── .gitignore                  # Git ignore rules
 ├── .pre-commit-config.yaml     # Pre-commit hooks
-├── CHANGELOG.md                # Version history
-├── CODE_OF_CONDUCT.md          # Community guidelines
-├── CONTRIBUTING.md             # Contribution guide
 ├── LICENSE                     # MIT License
 ├── Makefile                    # Convenient commands
 ├── pyproject.toml              # Project configuration
 ├── README.md                   # Project readme
-├── SECURITY.md                 # Security policy
-├── SUPPORT.md                  # Support information
+├── __main__.py                 # CLI entry point
 └── tox.ini                     # Tox test environments
 ```
+
 
 ---
 
@@ -343,7 +380,7 @@ The project includes a GitHub Actions workflow (`.github/workflows/ci.yml`) that
 
 ## Next Steps
 
-After running `setup_project.py`, you're ready to:
+After running `python-project-generator`, you're ready to:
 
 1. **Start Development**
    ```bash

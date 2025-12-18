@@ -124,7 +124,7 @@ dmypy.json
 .ruff_cache/
 
 # IDEs
-.vscode/
+# .vscode/
 .idea/
 *.swp
 *.swo

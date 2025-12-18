@@ -9,7 +9,6 @@ This test validates:
 
 import shutil
 import subprocess
-import sys
 import tempfile
 from pathlib import Path
 
@@ -23,6 +22,7 @@ class TestPackageInstallation:
         """Test that the package can be imported."""
         try:
             import python_project_generator
+
             assert python_project_generator.__version__ == "1.0.0"
         except ImportError as e:
             pytest.fail(f"Failed to import package: {e}")
@@ -31,6 +31,7 @@ class TestPackageInstallation:
         """Test that CLI module can be imported."""
         try:
             from python_project_generator import cli
+
             assert hasattr(cli, "main")
         except ImportError as e:
             pytest.fail(f"Failed to import CLI module: {e}")
@@ -39,6 +40,7 @@ class TestPackageInstallation:
         """Test that generator module can be imported."""
         try:
             from python_project_generator import generator
+
             assert hasattr(generator, "ProjectGenerator")
         except ImportError as e:
             pytest.fail(f"Failed to import generator module: {e}")
@@ -69,17 +71,23 @@ class TestProjectGeneration:
     def test_generate_project_via_cli(self, temp_output_dir):
         """Test generating a project via CLI command."""
         project_name = "test_smoke_project"
-        
+
         # Run the CLI command
         result = subprocess.run(
             [
                 "python-project-generator",
-                "--name", project_name,
-                "--description", "Test smoke project",
-                "--author", "Test Author",
-                "--email", "test@example.com",
-                "--github-username", "testuser",
-                "--output", str(temp_output_dir),
+                "--name",
+                project_name,
+                "--description",
+                "Test smoke project",
+                "--author",
+                "Test Author",
+                "--email",
+                "test@example.com",
+                "--github-username",
+                "testuser",
+                "--output",
+                str(temp_output_dir),
                 "--no-git",
             ],
             capture_output=True,
@@ -87,7 +95,7 @@ class TestProjectGeneration:
         )
 
         assert result.returncode == 0, f"CLI failed: {result.stderr}"
-        
+
         project_path = temp_output_dir / project_name
         assert project_path.exists(), f"Project directory not created: {project_path}"
 
@@ -105,6 +113,6 @@ class TestProjectGeneration:
         )
 
         project_path = generator.generate(force=False, init_git=False)
-        
+
         assert project_path.exists(), f"Project not created at {project_path}"
         assert project_path.name == "test_api_project"

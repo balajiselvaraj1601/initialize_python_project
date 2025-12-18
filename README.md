@@ -26,6 +26,66 @@ python -m python_project_generator.cli
 # or installed entrypoint: python-project-generator
 ```
 
+Generated Project Structure
+---------------------------
+The generator creates a well-organized Python project with the following structure:
+
+```
+my_project/
+├── .github/
+│   ├── CODEOWNERS
+│   ├── ISSUE_TEMPLATE/
+│   │   ├── bug_report.md
+│   │   ├── config.yml
+│   │   └── feature_request.md
+│   ├── PULL_REQUEST_TEMPLATE.md
+│   ├── actions/
+│   │   └── verify-metadata/
+│   │       └── action.yml
+│   └── workflows/
+│       └── ci.yml              # GitHub Actions CI
+├── .vscode/
+│   ├── settings.json           # VS Code settings
+│   ├── launch.json             # Debug configurations
+│   └── extensions.json         # Recommended extensions
+├── docs/
+│   ├── conf.py                 # Sphinx configuration
+│   ├── index.rst               # Documentation home
+│   ├── installation.rst        # Install guide
+│   ├── usage.rst               # Usage guide
+│   └── modules.rst             # API reference
+├── md_files/
+│   ├── CHANGELOG.md
+│   ├── CODE_OF_CONDUCT.md
+│   ├── CONTRIBUTING.md
+│   ├── CONVERSION_SUMMARY.md
+│   ├── FIX_SUMMARY.md
+│   ├── INSTALL_README.md
+│   ├── PACKAGE_USAGE.md
+│   ├── QUICKSTART.md
+│   ├── SECURITY.md
+│   ├── SUPPORT.md
+│   ├── TEMPLATE_README.md
+│   └── USAGE.md
+├── scripts/
+│   └── validate_project.py     # Project validation
+├── src/
+│   └── my_project/
+│       ├── __init__.py         # Package initialization
+│       └── main.py             # Main module
+├── tests/
+│   ├── __init__.py
+│   └── test_main.py            # Test suite
+├── .gitignore                  # Git ignore rules
+├── .pre-commit-config.yaml     # Pre-commit hooks
+├── LICENSE                     # MIT License
+├── Makefile                    # Convenient commands
+├── pyproject.toml              # Project configuration
+├── README.md                   # Project readme
+├── __main__.py                 # CLI entry point
+└── tox.ini                     # Tox test environments
+```
+
 Layout
 ------
 - `src/python_project_generator/` - generator package and CLI

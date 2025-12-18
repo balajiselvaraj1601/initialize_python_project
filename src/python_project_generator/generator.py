@@ -6,6 +6,7 @@ This module handles the generation of new Python projects from templates.
 
 import re
 import shutil
+from datetime import date
 from pathlib import Path
 from typing import Dict, Optional
 
@@ -40,7 +41,7 @@ class ProjectGenerator:
         self.github_username = github_username
         self.output_dir = Path(output_dir)
 
-        self.template_dir = Path(__file__).parent / "templates"
+        self.template_dir = Path(__file__).parent.parent.parent / "templates"
 
     @staticmethod
     def _sanitize_project_name(name: str) -> str:
@@ -120,13 +121,14 @@ class ProjectGenerator:
         Returns:
             Dictionary mapping placeholders to values
         """
-        return {
-            "{{PROJECT_NAME}}": self.project_name,
-            "{{PROJECT_DESCRIPTION}}": self.description,
-            "{{AUTHOR_NAME}}": self.author_name,
-            "{{AUTHOR_EMAIL}}": self.author_email,
-            "{{GITHUB_USERNAME}}": self.github_username,
-        }
+    return {
+        "{{PROJECT_NAME}}": self.project_name,
+        "{{PROJECT_DESCRIPTION}}": self.description,
+        "{{AUTHOR_NAME}}": self.author_name,
+        "{{AUTHOR_EMAIL}}": self.author_email,
+        "{{GITHUB_USERNAME}}": self.github_username,
+        "{{CURRENT_YEAR}}": str(date.today().year),
+    }
 
     def _replace_in_file(self, file_path: Path) -> None:
         """
@@ -156,17 +158,13 @@ class ProjectGenerator:
         # Copy all template files
         for item in self.template_dir.rglob("*"):
             if item.is_file():
-                # Calculate relative path
                 rel_path = item.relative_to(self.template_dir)
-                dest_path = project_path / rel_path
-
-                # Create parent directories
+                if 'md_files' in str(rel_path):
+                    dest_path = project_path / item.name
+                else:
+                    dest_path = project_path / rel_path
                 dest_path.parent.mkdir(parents=True, exist_ok=True)
-
-                # Copy file
                 shutil.copy2(item, dest_path)
-
-                # Replace placeholders
                 self._replace_in_file(dest_path)
 
     def _create_project_structure(self, project_path: Path) -> None:
@@ -188,10 +186,21 @@ class ProjectGenerator:
         main_content = '''"""Main module for the application."""\n\nimport logging\n\nlogger = logging.getLogger(__name__)\n\n\ndef hello_world() -> str:\n    """Return a greeting message."""\n    return "Hello, World!"\n\n\ndef main() -> None:\n    """Main entry point."""\n    logger.info(hello_world())\n\n\nif __name__ == "__main__":\n    logging.basicConfig(level=logging.INFO)\n    main()\n'''
         (project_path / "src" / self.project_name / "main.py").write_text(main_content)
 
+        # Create __init__.py
+        __init_content = f'''"""{{PROJECT_NAME}} package."""
+
+__version__ = "0.1.0"
+
+'''
+        (project_path / "src" / self.project_name / "__init__.py").write_text(__init_content)
+
         # Create test files
 
         test_content = f'''"""Tests for main module."""\n\nimport pytest\nfrom {self.project_name}.main import hello_world\n\n\ndef test_hello_world():\n    """Test the hello_world function."""\n    assert hello_world() == "Hello, World!"\n\n\ndef test_hello_world_not_empty():\n    """Test that hello_world returns a non-empty string."""\n    result = hello_world()\n    assert isinstance(result, str)\n    assert len(result) > 0\n'''
         (project_path / "tests" / "test_main.py").write_text(test_content)
+
+        # Create __init__.py for tests
+        (project_path / "tests" / "__init__.py").write_text("")
 
         # Create __main__.py for CLI entry
         main_entry = f'''"""Main entry point for {self.project_name}"""\n\nimport sys\nfrom {self.project_name}.main import main\n\nif __name__ == "__main__":\n    sys.exit(main())\n'''

@@ -1,0 +1,17 @@
+# Include all template files
+recursive-include src/python_project_generator/templates *
+recursive-include src/python_project_generator/templates/.*
+
+# Include documentation
+include README.md
+include TEMPLATE_README.md
+include LICENSE
+include CHANGELOG.md
+include PROJECT_SETUP.md
+include USAGE.md
+include FIX_SUMMARY.md
+
+# Exclude compiled Python files
+global-exclude *.py[cod]
+global-exclude __pycache__
+global-exclude *.so

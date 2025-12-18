@@ -1,0 +1,17 @@
+name: Verify package metadata
+description: Composite action to check pyproject.toml and basic metadata
+runs:
+  using: composite
+  steps:
+    - name: Check pyproject.toml parsing
+      shell: bash
+      run: |
+        python - <<'PY'
+import tomllib, sys
+try:
+    tomllib.load(open('pyproject.toml','rb'))
+except Exception as e:
+    print('Failed to parse pyproject.toml:', e)
+    sys.exit(1)
+print('pyproject.toml OK')
+PY

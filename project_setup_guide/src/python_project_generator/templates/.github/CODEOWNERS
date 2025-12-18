@@ -1,0 +1,4 @@
+# Code owners for the repository
+/src/ @your-org/core-team
+/docs/ @your-org/docs-team
+* @your-org/maintainers

@@ -5,9 +5,16 @@ A generic Python project with a well-organized structure.
 
 ## Installation
 
-Using uv:
+Using uv (recommended):
 ```bash
+# install uv via pipx for an isolated CLI
+pipx install uv
+
+# create/sync the environment and install dependencies
 uv sync
+
+# activate the environment created by uv
+source .venv/bin/activate
 ```
 
 Or using pip:

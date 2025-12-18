@@ -25,6 +25,22 @@ pip install -e .
 
 - 🚀 **Modern Python** - Supports Python 3.9+
 - 📦 **Package Management** - Uses pyproject.toml with pip or uv
+
+### Using `uv`
+
+Install `uv` via `pipx` for an isolated CLI:
+
+```bash
+python -m pip install --user pipx && python -m pipx ensurepath
+pipx install uv
+```
+
+Create and sync the environment from `pyproject.toml`:
+
+```bash
+uv sync
+source .venv/bin/activate
+```
 - ✅ **Testing** - pytest with coverage reporting
 - 🎨 **Code Quality** - Ruff and mypy pre-configured
 

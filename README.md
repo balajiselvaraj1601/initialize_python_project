@@ -40,8 +40,12 @@ A generic Python project with a well-organized structure.
 
 ## Installation
 
-Using uv:
+Using uv (recommended):
 ```bash
+# install uv via pipx (recommended)
+pipx install uv
+
+# create/sync the env and install deps from pyproject.toml
 uv sync
 ```
 

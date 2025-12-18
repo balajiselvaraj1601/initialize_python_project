@@ -33,6 +33,7 @@ dev = [
   "pip-audit>=2.0",
   "safety>=2.0",
   "pre-commit>=3.0.0",
+  "uv>=0.3.0",
 ]
 docs = [
   "sphinx>=5.0.0",

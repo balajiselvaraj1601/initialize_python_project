@@ -7,6 +7,19 @@ on:
     branches: [ main ]
 
 jobs:
+  call-reusable:
+    uses: ./.github/workflows/ci-reusable.yml
+    with:
+      python-version: '3.11'
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
   build:
     runs-on: ubuntu-latest
     strategy:

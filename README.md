@@ -49,11 +49,14 @@ pipx install uv
 uv sync
 ```
 
-Or using pip:
+Or using pip (installing the optional `uv` extras):
 ```bash
 python -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install -e .[dev]
+
+# Install with the uv extras (provides `uvicorn` and `uvloop`):
+pip install .[uv]
 ```
 
 ## Usage

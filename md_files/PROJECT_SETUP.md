@@ -498,7 +498,7 @@ Add new `.rst` files in `docs/` and reference in `docs/index.rst`:
 ```rst
 .. toctree::
    :maxdepth: 2
-   
+
    installation
    usage
    your_new_page
@@ -508,22 +508,22 @@ Add new `.rst` files in `docs/` and reference in `docs/index.rst`:
 
 ## FAQ
 
-**Q: Do I need to use `uv`?**  
+**Q: Do I need to use `uv`?**
 A: No, standard `pip` and `venv` work fine. `uv` is faster but optional.
 
-**Q: Can I use pytest-cov instead of coverage?**  
+**Q: Can I use pytest-cov instead of coverage?**
 A: Yes, it's already configured in `pyproject.toml` and used by the test commands.
 
-**Q: How do I add a CLI command?**  
+**Q: How do I add a CLI command?**
 A: The `[project.scripts]` section in `pyproject.toml` already defines one. After `pip install -e .`, you can run your project name as a command.
 
-**Q: Should I commit `.venv/`?**  
+**Q: Should I commit `.venv/`?**
 A: No, it's already in `.gitignore`. Virtual environments are local only.
 
-**Q: How do I change the license?**  
+**Q: How do I change the license?**
 A: Replace `LICENSE` file content and update `pyproject.toml` classifiers.
 
-**Q: Can I use a different test framework?**  
+**Q: Can I use a different test framework?**
 A: Yes, but you'll need to update `pyproject.toml`, `tox.ini`, and `Makefile` accordingly.
 
 ---
@@ -539,6 +539,6 @@ A: Yes, but you'll need to update `pyproject.toml`, `tox.ini`, and `Makefile` ac
 
 ---
 
-**Template Version**: 1.0.0  
-**Last Updated**: December 2025  
+**Template Version**: 1.0.0
+**Last Updated**: December 2025
 **Python Support**: 3.9+

@@ -1,3 +1,4 @@
+````markdown
 # Contributing to {{PROJECT_NAME}}
 
 Thank you for considering contributing! We appreciate your help in making this project better.
@@ -87,3 +88,5 @@ Thank you for considering contributing! We appreciate your help in making this p
 Feel free to open an issue for discussion or ask in pull request comments.
 
 See `CODE_OF_CONDUCT.md` for community guidelines.
+
+````

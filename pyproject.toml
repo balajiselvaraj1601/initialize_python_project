@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "python-project-generator"
+version = "1.0.0"
+description = "Generate production-ready Python projects with modern tooling and best practices"
+authors = [
+  { name = "Python Community", email = "support@example.com" },
+]
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+keywords = ["project-generator", "template", "boilerplate", "scaffolding"]
+dependencies = []
+
+[project.scripts]
+python-project-generator = "python_project_generator.cli:main"
+create-python-project = "python_project_generator.cli:main"
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.0.0",
+  "pytest-cov>=4.0.0",
+  "ruff>=0.1.0",
+  "mypy>=1.0.0",
+  "tox>=4.0.0",
+  "build>=0.10",
+  "twine>=4.0",
+  "pip-audit>=2.0",
+  "safety>=2.0",
+  "pre-commit>=3.0.0",
+]
+docs = [
+  "sphinx>=5.0.0",
+  "sphinx-rtd-theme>=1.2.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+addopts = "-v"

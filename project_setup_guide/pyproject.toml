@@ -59,6 +59,12 @@ docs = [
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools]
+include-package-data = false
+
+[tool.setuptools.exclude-package-data]
+"python_project_generator" = ["templates/*", "templates/**"]
+
 [tool.ruff]
 line-length = 88
 target-version = "py39"

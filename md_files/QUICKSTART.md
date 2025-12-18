@@ -73,15 +73,15 @@ code .  # Or your preferred editor
 
 ## What You Get
 
-✅ Complete project structure  
-✅ GitHub Actions CI/CD  
-✅ Pre-commit hooks  
-✅ Testing with pytest  
-✅ Code quality tools (ruff, black, mypy, isort)  
-✅ Documentation with Sphinx  
-✅ VS Code configuration  
-✅ Makefile with shortcuts  
-✅ All community files (LICENSE, CONTRIBUTING, etc.)  
+✅ Complete project structure
+✅ GitHub Actions CI/CD
+✅ Pre-commit hooks
+✅ Testing with pytest
+✅ Code quality tools (ruff, black, mypy, isort)
+✅ Documentation with Sphinx
+✅ VS Code configuration
+✅ Makefile with shortcuts
+✅ All community files (LICENSE, CONTRIBUTING, etc.)
 
 ## Examples
 

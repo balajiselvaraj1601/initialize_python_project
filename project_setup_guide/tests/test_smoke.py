@@ -9,7 +9,6 @@ This test validates:
 
 import shutil
 import subprocess
-import sys
 import tempfile
 from pathlib import Path
 
@@ -23,6 +22,7 @@ class TestPackageInstallation:
         """Test that the package can be imported."""
         try:
             import python_project_generator
+
             assert python_project_generator.__version__ == "1.0.0"
         except ImportError as e:
             pytest.fail(f"Failed to import package: {e}")
@@ -31,6 +31,7 @@ class TestPackageInstallation:
         """Test that CLI module can be imported."""
         try:
             from python_project_generator import cli
+
             assert hasattr(cli, "main")
         except ImportError as e:
             pytest.fail(f"Failed to import CLI module: {e}")
@@ -39,6 +40,7 @@ class TestPackageInstallation:
         """Test that generator module can be imported."""
         try:
             from python_project_generator import generator
+
             assert hasattr(generator, "ProjectGenerator")
         except ImportError as e:
             pytest.fail(f"Failed to import generator module: {e}")
@@ -69,17 +71,23 @@ class TestProjectGeneration:
     def test_generate_project_via_cli(self, temp_output_dir):
         """Test generating a project via CLI command."""
         project_name = "test_smoke_project"
-        
+
         # Run the CLI command
         result = subprocess.run(
             [
                 "python-project-generator",
-                "--name", project_name,
-                "--description", "Test smoke project",
-                "--author", "Test Author",
-                "--email", "test@example.com",
-                "--github-username", "testuser",
-                "--output", str(temp_output_dir),
+                "--name",
+                project_name,
+                "--description",
+                "Test smoke project",
+                "--author",
+                "Test Author",
+                "--email",
+                "test@example.com",
+                "--github-username",
+                "testuser",
+                "--output",
+                str(temp_output_dir),
                 "--no-git",  # Skip git for faster tests
             ],
             capture_output=True,
@@ -87,7 +95,7 @@ class TestProjectGeneration:
         )
 
         assert result.returncode == 0, f"CLI failed: {result.stderr}"
-        
+
         project_path = temp_output_dir / project_name
         assert project_path.exists(), f"Project directory not created: {project_path}"
 
@@ -105,7 +113,7 @@ class TestProjectGeneration:
         )
 
         project_path = generator.generate(force=False, init_git=False)
-        
+
         assert project_path.exists(), f"Project not created at {project_path}"
         assert project_path.name == "test_api_project"
 
@@ -120,7 +128,7 @@ class TestGeneratedProjectStructure:
 
         temp_dir = tempfile.mkdtemp(prefix="test_pyprojgen_struct_")
         output_dir = Path(temp_dir)
-        
+
         generator = ProjectGenerator(
             project_name="test_structure_check",
             description="Project for structure validation",
@@ -131,9 +139,9 @@ class TestGeneratedProjectStructure:
         )
 
         project_path = generator.generate(force=False, init_git=False)
-        
+
         yield project_path
-        
+
         # Cleanup
         if output_dir.exists():
             shutil.rmtree(output_dir)
@@ -181,7 +189,7 @@ class TestGeneratedProjectStructure:
     def test_source_package_files(self, generated_project):
         """Test that source package has required files."""
         src_dir = generated_project / "src" / "test_structure_check"
-        
+
         required_files = [
             "main.py",
         ]
@@ -193,7 +201,7 @@ class TestGeneratedProjectStructure:
     def test_test_files_exist(self, generated_project):
         """Test that test files exist."""
         tests_dir = generated_project / "tests"
-        
+
         required_files = [
             "test_main.py",
         ]
@@ -205,7 +213,7 @@ class TestGeneratedProjectStructure:
     def test_documentation_files(self, generated_project):
         """Test that documentation files exist."""
         docs_dir = generated_project / "docs"
-        
+
         required_files = [
             "conf.py",
             "index.rst",
@@ -221,15 +229,17 @@ class TestGeneratedProjectStructure:
     def test_github_workflows(self, generated_project):
         """Test that GitHub workflows exist."""
         workflows_dir = generated_project / ".github" / "workflows"
-        
+
         # At least one workflow should exist
-        workflow_files = list(workflows_dir.glob("*.yml")) + list(workflows_dir.glob("*.yaml"))
+        workflow_files = list(workflows_dir.glob("*.yml")) + list(
+            workflows_dir.glob("*.yaml")
+        )
         assert len(workflow_files) > 0, "No GitHub workflow files found"
 
     def test_vscode_configuration(self, generated_project):
         """Test that VS Code configuration exists."""
         vscode_dir = generated_project / ".vscode"
-        
+
         config_files = [
             "settings.json",
             "extensions.json",
@@ -251,7 +261,7 @@ class TestPlaceholderReplacement:
 
         temp_dir = tempfile.mkdtemp(prefix="test_pyprojgen_placeholder_")
         output_dir = Path(temp_dir)
-        
+
         generator = ProjectGenerator(
             project_name="placeholder_test_proj",
             description="Testing placeholder replacement",
@@ -262,9 +272,9 @@ class TestPlaceholderReplacement:
         )
 
         project_path = generator.generate(force=False, init_git=False)
-        
+
         yield project_path
-        
+
         # Cleanup
         if output_dir.exists():
             shutil.rmtree(output_dir)
@@ -273,23 +283,25 @@ class TestPlaceholderReplacement:
         """Test that pyproject.toml has no unreplaced placeholders."""
         pyproject_path = test_project / "pyproject.toml"
         content = pyproject_path.read_text()
-        
+
         # Check that placeholders are replaced
         assert "placeholder_test_proj" in content, "Project name not replaced"
         assert "John Doe" in content, "Author name not replaced"
         assert "john@example.com" in content, "Email not replaced"
-        
+
         # Check that no unreplaced placeholders exist
         assert "{{PROJECT_NAME}}" not in content, "Unreplaced PROJECT_NAME placeholder"
         assert "{{AUTHOR_NAME}}" not in content, "Unreplaced AUTHOR_NAME placeholder"
         assert "{{AUTHOR_EMAIL}}" not in content, "Unreplaced AUTHOR_EMAIL placeholder"
-        assert "{{GITHUB_USERNAME}}" not in content, "Unreplaced GITHUB_USERNAME placeholder"
+        assert "{{GITHUB_USERNAME}}" not in content, (
+            "Unreplaced GITHUB_USERNAME placeholder"
+        )
 
     def test_readme_placeholders(self, test_project):
         """Test that README has no unreplaced placeholders."""
         readme_path = test_project / "README.md"
         content = readme_path.read_text()
-        
+
         # Check that no unreplaced placeholders exist
         assert "{{PROJECT_NAME}}" not in content, "Unreplaced PROJECT_NAME in README"
 
@@ -431,7 +443,7 @@ class TestEdgeCases:
         # Overwrite with force
         project_path2 = generator.generate(force=True, init_git=False)
         assert project_path2.exists()
-        
+
         # Marker file should be gone (project was recreated)
         assert not marker.exists()
 

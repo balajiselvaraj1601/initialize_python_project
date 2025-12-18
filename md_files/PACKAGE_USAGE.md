@@ -153,15 +153,15 @@ make test
 
 ## 🎯 Key Features
 
-✅ **One Command Setup** - `python-project-generator` and you're ready  
-✅ **Modern Python** - Python 3.9+ support  
-✅ **Complete Tooling** - pytest, ruff, black, mypy, isort  
-✅ **CI/CD Ready** - GitHub Actions workflows included  
-✅ **Documentation** - Sphinx with ReadTheDocs theme  
-✅ **Pre-commit Hooks** - Automated code quality  
-✅ **VS Code Integration** - Full editor configuration  
-✅ **Makefile** - Convenient development commands  
-✅ **Git Ready** - Automatic initialization  
+✅ **One Command Setup** - `python-project-generator` and you're ready
+✅ **Modern Python** - Python 3.9+ support
+✅ **Complete Tooling** - pytest, ruff, black, mypy, isort
+✅ **CI/CD Ready** - GitHub Actions workflows included
+✅ **Documentation** - Sphinx with ReadTheDocs theme
+✅ **Pre-commit Hooks** - Automated code quality
+✅ **VS Code Integration** - Full editor configuration
+✅ **Makefile** - Convenient development commands
+✅ **Git Ready** - Automatic initialization
 
 ## 📦 Building & Distribution
 

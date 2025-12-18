@@ -4,6 +4,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 def hello_world() -> str:
     """Return a greeting message."""
     return "Hello, World!"

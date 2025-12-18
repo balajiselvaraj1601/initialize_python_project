@@ -8,7 +8,7 @@ This is a **template repository**. To use it:
    ```bash
    python setup_project.py
    ```
-   
+
    This will:
    - Prompt you for project details
    - Replace all `{{PLACEHOLDER}}` values
@@ -19,7 +19,7 @@ This is a **template repository**. To use it:
    ```bash
    python scripts/validate_project.py
    ```
-   
+
    Should now show all checks passing.
 
 3. **Start developing**:

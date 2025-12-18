@@ -22,7 +22,8 @@ Examples:
   python-project-generator
 
   # Non-interactive mode
-  python-project-generator --name my_project --author "John Doe" --email john@example.com
+  python-project-generator --name YOUR_PROJECT --author "John Doe" \
+    --email john@example.com
 
   # Specify output directory
   python-project-generator --output /path/to/projects
@@ -112,28 +113,14 @@ Examples:
         )
 
     try:
-        project_path = generator.generate(
+        generator.generate(
             force=args.force,
             init_git=not args.no_git,
         )
 
-        print("\n" + "=" * 70)
-        print("✨ Project created successfully!")
-        print("=" * 70)
-        print(f"\nProject location: {project_path}")
-        print("\nNext steps:")
-        print(f"  1. cd {project_path.name}")
-        print("  2. python -m venv .venv")
-        print("  3. source .venv/bin/activate  # On Windows: .venv\\Scripts\\activate")
-        print("  4. pip install -e .[dev]")
-        print("  5. pre-commit install")
-        print("  6. make test")
-        print("\nHappy coding! 🚀")
-
         return 0
 
-    except Exception as e:
-        print(f"\n❌ Error: {e}", file=sys.stderr)
+    except Exception:
         return 1
 
 

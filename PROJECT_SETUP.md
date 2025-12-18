@@ -32,7 +32,7 @@ This tool will:
 **Install the Python Project Generator:**
 ```bash
 # Clone this repository
-git clone https://github.com/YOUR_USERNAME/python-project-generator.git
+git clone https://github.com/balajiselvaraj1601/python-project-generator.git
 cd python-project-generator
 
 # Install in development mode
@@ -53,7 +53,7 @@ python-project-generator --version
 
 ```bash
 # Option A: Install from source (for development)
-git clone https://github.com/YOUR_USERNAME/python-project-generator.git
+git clone https://github.com/balajiselvaraj1601/python-project-generator.git
 cd python-project-generator
 pip install -e .
 
@@ -87,7 +87,7 @@ It will then create a new project directory with all files properly configured.
 **Verify:**
 ```bash
 # Check that the project was created
-ls -la YOUR_PROJECT_NAME/
+ls -la python-project-generator/
 # Should show the complete project structure
 ```
 
@@ -209,15 +209,8 @@ YOUR_PROJECT/
 │   ├── CHANGELOG.md
 │   ├── CODE_OF_CONDUCT.md
 │   ├── CONTRIBUTING.md
-│   ├── CONVERSION_SUMMARY.md
-│   ├── FIX_SUMMARY.md
-│   ├── INSTALL_README.md
-│   ├── PACKAGE_USAGE.md
-│   ├── QUICKSTART.md
 │   ├── SECURITY.md
-│   ├── SUPPORT.md
-│   ├── TEMPLATE_README.md
-│   └── USAGE.md
+│   └── SUPPORT.md
 ├── scripts/
 │   └── validate_project.py     # Project validation
 ├── src/
@@ -593,5 +586,5 @@ A: Yes, but you'll need to update `pyproject.toml`, `tox.ini`, and `Makefile` ac
 ---
 
 **Template Version**: 1.0.0
-**Last Updated**: December 2025
+**Last Updated**: 18 December 2025
 **Python Support**: 3.9+

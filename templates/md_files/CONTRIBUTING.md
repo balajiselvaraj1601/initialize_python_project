@@ -7,7 +7,7 @@ Thank you for considering contributing! We appreciate your help in making this p
 
 1. Fork and clone the repository:
    ```bash
-   git clone https://github.com/{{GITHUB_USERNAME}}/{{PROJECT_NAME}}.git
+   git clone https://github.com/balajiselvaraj1601/{{PROJECT_NAME}}.git
    cd {{PROJECT_NAME}}
    ```
 

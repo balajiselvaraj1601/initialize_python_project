@@ -8,7 +8,6 @@ import re
 import shutil
 from datetime import date
 from pathlib import Path
-from typing import Dict
 
 
 class ProjectGenerator:
@@ -27,7 +26,8 @@ class ProjectGenerator:
         Initialize the project generator.
 
         Args:
-            project_name: Name of the project (will be converted to valid Python package name)
+            project_name: Name of the project (will be converted to valid
+                Python package name)
             description: Project description
             author_name: Author's full name
             author_email: Author's email address
@@ -63,7 +63,7 @@ class ProjectGenerator:
         # Ensure it doesn't start with a number
         if name and name[0].isdigit():
             name = f"project_{name}"
-        return name or "my_project"
+        return name or "YOUR_PROJECT"
 
     @classmethod
     def from_interactive(cls, output_dir: Path = Path.cwd()) -> "ProjectGenerator":
@@ -76,33 +76,21 @@ class ProjectGenerator:
         Returns:
             ProjectGenerator instance
         """
-        print("=" * 70)
-        print("Python Project Generator")
-        print("=" * 70)
-        print()
 
         project_name = input("Project name (e.g., my-awesome-project): ").strip()
         if not project_name:
-            raise ValueError("Project name is required")
+            msg = "Project name is required"
+            raise ValueError(msg)
 
         description = input("Project description: ").strip() or "A Python project"
         author_name = input("Author name: ").strip() or "Developer"
         author_email = input("Author email: ").strip() or "dev@example.com"
         github_username = input("GitHub username: ").strip() or "username"
 
-        print()
-        print("Summary:")
-        print("-" * 70)
-        sanitized_name = cls._sanitize_project_name(project_name)
-        print(f"Project name: {project_name} (package: {sanitized_name})")
-        print(f"Description: {description}")
-        print(f"Author: {author_name} <{author_email}>")
-        print(f"GitHub: {github_username}")
-        print("-" * 70)
+        cls._sanitize_project_name(project_name)
 
         confirm = input("\nProceed with these values? (y/n): ").strip().lower()
         if confirm != "y":
-            print("Aborted.")
             raise SystemExit(0)
 
         return cls(
@@ -114,7 +102,7 @@ class ProjectGenerator:
             output_dir=output_dir,
         )
 
-    def _get_replacements(self) -> Dict[str, str]:
+    def _get_replacements(self) -> dict[str, str]:
         """
         Get placeholder replacement mapping.
 
@@ -145,8 +133,8 @@ class ProjectGenerator:
                 content = content.replace(placeholder, value)
 
             file_path.write_text(content, encoding="utf-8")
-        except Exception as e:
-            print(f"Warning: Could not process {file_path}: {e}")
+        except Exception:
+            pass
 
     def _copy_template_files(self, project_path: Path) -> None:
         """
@@ -187,7 +175,7 @@ class ProjectGenerator:
         (project_path / "src" / self.project_name / "main.py").write_text(main_content)
 
         # Create __init__.py
-        __init_content = '''"""{PROJECT_NAME} package."""
+        __init_content = f'''"""{self.project_name} package."""
 
 __version__ = "0.1.0"
 
@@ -227,23 +215,20 @@ __version__ = "0.1.0"
         # Check if directory exists
         if project_path.exists():
             if not force:
-                raise FileExistsError(
+                msg = (
                     f"Directory '{project_path}' already exists. "
                     "Use --force to overwrite."
                 )
+                raise FileExistsError(msg)
             shutil.rmtree(project_path)
 
         # Create project directory
         project_path.mkdir(parents=True, exist_ok=True)
 
-        print(f"\n📁 Creating project structure in {project_path}...")
-
         # Copy template files
-        print("📋 Copying template files...")
         self._copy_template_files(project_path)
 
         # Create project structure
-        print("🏗️  Creating project directories...")
         self._create_project_structure(project_path)
 
         # Initialize git if requested
@@ -251,7 +236,6 @@ __version__ = "0.1.0"
             import subprocess
 
             try:
-                print("🔧 Initializing git repository...")
                 subprocess.run(
                     ["git", "init"],
                     cwd=project_path,
@@ -275,10 +259,9 @@ __version__ = "0.1.0"
                     check=True,
                     capture_output=True,
                 )
-                print("✅ Git repository initialized")
             except subprocess.CalledProcessError:
-                print("⚠️  Git initialization failed (git might not be installed)")
+                pass
             except FileNotFoundError:
-                print("⚠️  Git not found - skipping repository initialization")
+                pass
 
         return project_path

@@ -8,6 +8,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/{{GITHUB_USERNAME}}/{{PROJECT_NAME}}/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/balajiselvaraj1601/{{PROJECT_NAME}}/compare/v0.1.0...HEAD
 
 ```

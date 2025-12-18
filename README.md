@@ -1,37 +1,27 @@
-"""Project: python-project-generator
+# Python Project Generator
 
-Purpose
--------
-This repository provides a small, opinionated Python project scaffolder.
+Generate production-ready Python projects with modern tooling and best practices.
 
-Quickstart
-----------
-1. Create a virtualenv and activate it:
+## Quickstart
+
+1. Install the package:
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
+pip install python-project-generator
 ```
 
-2. Install the package in editable mode:
+2. Run the CLI to generate a project:
 
 ```bash
-pip install -e .[dev]
+python-project-generator
 ```
 
-3. Run the CLI to generate a project:
+## Generated Project Structure
 
-```bash
-python -m python_project_generator.cli
-# or installed entrypoint: python-project-generator
-```
-
-Generated Project Structure
----------------------------
 The generator creates a well-organized Python project with the following structure:
 
 ```
-my_project/
+YOUR_PROJECT/
 ├── .github/
 │   ├── CODEOWNERS
 │   ├── ISSUE_TEMPLATE/
@@ -58,19 +48,12 @@ my_project/
 │   ├── CHANGELOG.md
 │   ├── CODE_OF_CONDUCT.md
 │   ├── CONTRIBUTING.md
-│   ├── CONVERSION_SUMMARY.md
-│   ├── FIX_SUMMARY.md
-│   ├── INSTALL_README.md
-│   ├── PACKAGE_USAGE.md
-│   ├── QUICKSTART.md
 │   ├── SECURITY.md
-│   ├── SUPPORT.md
-│   ├── TEMPLATE_README.md
-│   └── USAGE.md
+│   └── SUPPORT.md
 ├── scripts/
 │   └── validate_project.py     # Project validation
 ├── src/
-│   └── my_project/
+│   └── YOUR_PROJECT/
 │       ├── __init__.py         # Package initialization
 │       └── main.py             # Main module
 ├── tests/
@@ -86,58 +69,34 @@ my_project/
 └── tox.ini                     # Tox test environments
 ```
 
-Layout
-------
+## Layout
+
 - `src/python_project_generator/` - generator package and CLI
 - `templates/` - project templates used by the generator
 - `docs/` - documentation and quickstart
 - `tests/` - test suite for the generator
 
-"""
-# {{PROJECT_NAME}}
-
-A generic Python project with a well-organized structure.
-
 ## Installation
 
-Using uv (recommended):
+From PyPI:
 ```bash
-# install uv via pipx (recommended)
-pipx install uv
-
-# create/sync the env and install deps from pyproject.toml
-uv sync
+pip install python-project-generator
 ```
 
-Or using pip (installing the optional `uv` extras):
+From source:
 ```bash
-python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-pip install -e .[dev]
-
-# Install with the uv extras (provides `uvicorn` and `uvloop`):
-pip install .[uv]
+git clone https://github.com/balajiselvaraj1601/initialize_python_project.git
+cd initialize_python_project
+pip install -e .
 ```
 
 ## Usage
 
-```python
-from {{PROJECT_NAME}}.main import hello_world
-print(hello_world())
-```
-
-## Development
-
 ```bash
-# Run tests
-tox -e pytest
-
-# Run linting
-tox -e lint
-
-# Run type checking
-tox -e type
+python-project-generator
 ```
+
+Follow the prompts to create your project.
 
 ## License
 

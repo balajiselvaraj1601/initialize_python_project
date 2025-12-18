@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v6.0.0
     hooks:
       - id: end-of-file-fixer
         exclude: ^templates/
@@ -12,30 +12,28 @@ repos:
         exclude: uv\.lock$
 
   - repo: https://github.com/psf/black
-    rev: 24.4.0
+    rev: 25.12.0
     hooks:
       - id: black
         language_version: python3
         exclude: ^templates/
 
   - repo: https://github.com/PyCQA/isort
-    rev: 5.13.0
+    rev: 7.0.0
     hooks:
       - id: isort
         name: isort (python)
         exclude: ^templates/
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.6.9
+    rev: v0.14.9
     hooks:
       - id: ruff
         args: [--fix]
         exclude: ^templates/
-      - id: ruff-format
-        exclude: ^templates/
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.6.1
+    rev: v1.19.1
     hooks:
       - id: mypy
         additional_dependencies: ["types-requests"]

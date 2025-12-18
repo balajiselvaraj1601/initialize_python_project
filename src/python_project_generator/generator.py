@@ -155,6 +155,27 @@ class ProjectGenerator:
                 shutil.copy2(item, dest_path)
                 self._replace_in_file(dest_path)
 
+        # Copy .gitignore from root
+        gitignore_src = self.template_dir.parent / ".gitignore"
+        if gitignore_src.exists():
+            shutil.copy2(gitignore_src, project_path / ".gitignore")
+
+        # Copy .github from root
+        github_src = self.template_dir.parent / ".github"
+        if github_src.exists():
+            for item in github_src.rglob("*"):
+                if item.is_file():
+                    rel_path = item.relative_to(github_src)
+                    dest_path = project_path / ".github" / rel_path
+                    dest_path.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(item, dest_path)
+                    self._replace_in_file(dest_path)
+
+        # Copy .pre-commit-config.yaml from root
+        precommit_src = self.template_dir.parent / ".pre-commit-config.yaml"
+        if precommit_src.exists():
+            shutil.copy2(precommit_src, project_path / ".pre-commit-config.yaml")
+
     def _create_project_structure(self, project_path: Path) -> None:
         """
         Create the project directory structure.

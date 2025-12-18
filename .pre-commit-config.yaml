@@ -3,11 +3,8 @@ repos:
     rev: v6.0.0
     hooks:
       - id: end-of-file-fixer
-        exclude: ^templates/
       - id: trailing-whitespace
-        exclude: ^templates/
       - id: check-yaml
-        exclude: ^templates/
       - id: check-added-large-files
         exclude: uv\.lock$
 
@@ -16,25 +13,21 @@ repos:
     hooks:
       - id: black
         language_version: python3
-        exclude: ^templates/
 
   - repo: https://github.com/PyCQA/isort
     rev: 7.0.0
     hooks:
       - id: isort
         name: isort (python)
-        exclude: ^templates/
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.14.9
     hooks:
       - id: ruff
         args: [--fix]
-        exclude: ^templates/
 
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.19.1
     hooks:
       - id: mypy
         additional_dependencies: ["types-requests"]
-        exclude: ^templates/

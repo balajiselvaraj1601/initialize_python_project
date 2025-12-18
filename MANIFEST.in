@@ -2,4 +2,3 @@ recursive-include src/python_project_generator/templates *
 recursive-include templates *
 recursive-include templates/md *
 recursive-include docs *
-

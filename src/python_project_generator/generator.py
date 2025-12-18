@@ -8,7 +8,7 @@ import re
 import shutil
 from datetime import date
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict
 
 
 class ProjectGenerator:
@@ -121,14 +121,14 @@ class ProjectGenerator:
         Returns:
             Dictionary mapping placeholders to values
         """
-    return {
-        "{{PROJECT_NAME}}": self.project_name,
-        "{{PROJECT_DESCRIPTION}}": self.description,
-        "{{AUTHOR_NAME}}": self.author_name,
-        "{{AUTHOR_EMAIL}}": self.author_email,
-        "{{GITHUB_USERNAME}}": self.github_username,
-        "{{CURRENT_YEAR}}": str(date.today().year),
-    }
+        return {
+            "{{PROJECT_NAME}}": self.project_name,
+            "{{PROJECT_DESCRIPTION}}": self.description,
+            "{{AUTHOR_NAME}}": self.author_name,
+            "{{AUTHOR_EMAIL}}": self.author_email,
+            "{{GITHUB_USERNAME}}": self.github_username,
+            "{{CURRENT_YEAR}}": str(date.today().year),
+        }
 
     def _replace_in_file(self, file_path: Path) -> None:
         """
@@ -159,7 +159,7 @@ class ProjectGenerator:
         for item in self.template_dir.rglob("*"):
             if item.is_file():
                 rel_path = item.relative_to(self.template_dir)
-                if 'md_files' in str(rel_path):
+                if "md_files" in str(rel_path):
                     dest_path = project_path / item.name
                 else:
                     dest_path = project_path / rel_path
@@ -187,12 +187,14 @@ class ProjectGenerator:
         (project_path / "src" / self.project_name / "main.py").write_text(main_content)
 
         # Create __init__.py
-        __init_content = f'''"""{{PROJECT_NAME}} package."""
+        __init_content = '''"""{PROJECT_NAME} package."""
 
 __version__ = "0.1.0"
 
 '''
-        (project_path / "src" / self.project_name / "__init__.py").write_text(__init_content)
+        (project_path / "src" / self.project_name / "__init__.py").write_text(
+            __init_content
+        )
 
         # Create test files
 
@@ -263,7 +265,12 @@ __version__ = "0.1.0"
                     capture_output=True,
                 )
                 subprocess.run(
-                    ["git", "commit", "-m", "Initial commit from python-project-generator"],
+                    [
+                        "git",
+                        "commit",
+                        "-m",
+                        "Initial commit from python-project-generator",
+                    ],
                     cwd=project_path,
                     check=True,
                     capture_output=True,

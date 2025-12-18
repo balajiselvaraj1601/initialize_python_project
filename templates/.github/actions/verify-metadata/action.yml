@@ -1,0 +1,10 @@
+name: 'verify-metadata'
+description: 'Verify package metadata in pyproject.toml'
+inputs:
+  path:
+    description: 'Path to pyproject.toml'
+    required: false
+    default: './pyproject.toml'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'

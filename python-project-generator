@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Local CLI wrapper for python-project-generator used during testing."""
+
 import sys
 from pathlib import Path
 
@@ -8,8 +9,7 @@ ROOT = Path(__file__).resolve().parent
 SRC = ROOT / "src"
 sys.path.insert(0, str(SRC))
 
-from python_project_generator.cli import main
-
+from python_project_generator.cli import main  # noqa: E402
 
 if __name__ == "__main__":
     sys.exit(main())

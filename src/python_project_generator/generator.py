@@ -66,12 +66,9 @@ class ProjectGenerator:
         return name or "YOUR_PROJECT"
 
     @classmethod
-    def from_interactive(cls, output_dir: Path = Path.cwd()) -> "ProjectGenerator":
+    def from_interactive(cls) -> "ProjectGenerator":
         """
         Create generator instance from interactive prompts.
-
-        Args:
-            output_dir: Directory where project will be created
 
         Returns:
             ProjectGenerator instance
@@ -86,6 +83,11 @@ class ProjectGenerator:
         author_name = input("Author name: ").strip() or "Developer"
         author_email = input("Author email: ").strip() or "dev@example.com"
         github_username = input("GitHub username: ").strip() or "username"
+
+        output_dir_str = input(
+            "Output directory (default: current directory): "
+        ).strip()
+        output_dir = Path(output_dir_str) if output_dir_str else Path.cwd()
 
         cls._sanitize_project_name(project_name)
 
@@ -189,6 +191,12 @@ class ProjectGenerator:
         (project_path / "docs").mkdir(parents=True, exist_ok=True)
         (project_path / "scripts").mkdir(parents=True, exist_ok=True)
 
+        # Copy validate_project.py to scripts
+        validate_script_src = Path(__file__).parent.parent / "validate_project.py"
+        shutil.copy2(
+            validate_script_src, project_path / "scripts" / "validate_project.py"
+        )
+
         # Package files: create main module(s)
 
         # Create main.py
@@ -217,6 +225,31 @@ __version__ = "0.1.0"
         main_entry = f'''"""Main entry point for {self.project_name}"""\n\nimport sys\nfrom {self.project_name}.main import main\n\nif __name__ == "__main__":\n    sys.exit(main())\n'''
         (project_path / "__main__.py").write_text(main_entry)
 
+        # Create Makefile
+        makefile_content = """# Makefile for Python project
+
+.PHONY: help install test lint format clean
+
+help:  ## Show this help
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
+
+install:  ## Install dependencies
+	pip install -e .
+
+test:  ## Run tests
+	pytest
+
+lint:  ## Run linting
+	flake8 src tests
+
+format:  ## Format code
+	black src tests
+
+clean:  ## Clean up
+	rm -rf build dist *.egg-info
+"""
+        (project_path / "Makefile").write_text(makefile_content)
+
     def generate(self, force: bool = False, init_git: bool = True) -> Path:
         """
         Generate the project.
@@ -231,6 +264,8 @@ __version__ = "0.1.0"
         Raises:
             FileExistsError: If project directory exists and force=False
         """
+        import subprocess
+
         project_path = self.output_dir / self.project_name
 
         # Check if directory exists
@@ -254,8 +289,6 @@ __version__ = "0.1.0"
 
         # Initialize git if requested
         if init_git:
-            import subprocess
-
             try:
                 subprocess.run(
                     ["git", "init"],
@@ -284,5 +317,19 @@ __version__ = "0.1.0"
                 pass
             except FileNotFoundError:
                 pass
+
+        # Validate the generated project using the included script
+        try:
+            subprocess.run(
+                ["python", "scripts/validate_project.py"],
+                cwd=project_path,
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+        except subprocess.CalledProcessError as e:
+            # If validation fails, raise an error with the output
+            msg = f"Generated project validation failed: {e.stdout}"
+            raise RuntimeError(msg) from e
 
         return project_path

@@ -1,4 +1,7 @@
 ```restructuredtext
+Python Project Generator
+========================
+
 .. Documentation index (moved)
 
 .. toctree::
